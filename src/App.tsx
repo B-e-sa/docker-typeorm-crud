@@ -1,7 +1,6 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import styled from 'styled-components'
-import getCurrentDate from "./utils/getCurrentDate"
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 interface ITodos {
   id: number
@@ -9,51 +8,45 @@ interface ITodos {
   content: string
   date: string
   color: string
-}
+};
 
 const App = () => {
 
-  const [todos, setTodos] = useState<ITodos[]>([{ id: 1, title: '', content: '', date: '', color: '#f8f845' }])
-  const [errorMessage, setErrorMessage] = useState<string>()
+  const [todos, setTodos] = useState<ITodos[]>();
+  const [errorMessage, setErrorMessage] = useState<string>();
 
-  const apiUrl: string = 'http://localhost:3000/api/notes/'
+  const apiUrl: string = 'http://localhost:3000/api/notes/';
 
   const getTodos = async (): Promise<void> => {
 
     await axios.get(apiUrl)
       .then(({ data }) => setTodos(data))
-      .catch(err => setErrorMessage(err))
+      .catch(err => setErrorMessage(err));
 
-  }
+  };
 
-  useEffect(() => {
-
-    getTodos()
-
-  })
+  useEffect(() => { getTodos() });
 
   const newTodo = async (): Promise<void> => {
 
-    const defaultTodo = {
-      title: 'Title',
-      content: 'Content',
-      date: getCurrentDate(),
-      color: '#f8f845'
-    }
+    await axios.post(apiUrl)
+      .catch(err => setErrorMessage(err));
 
-    await axios.post(apiUrl, defaultTodo)
-      .catch(err => setErrorMessage(err))
-
-  }
+  };
 
   const deleteTodo = async (id: number): Promise<void> => {
-    await axios.delete(apiUrl + id)
-  }
+    await axios.delete(apiUrl + id);
+  };
 
-  const colors: string[] = ['#f8f556', '#f87845', '#45c5f8', '#9cf845']
+  const colors: string[] = [
+    '#f8f556',
+    '#f87845',
+    '#45c5f8',
+    '#9cf845'
+  ];
 
   return (
-    <div className="App">
+    <div className='App'>
       <div style={{ display: 'flex' }}>
         {todos ?
           todos.map(({ id, title, color, content, date }) => {
@@ -63,18 +56,18 @@ const App = () => {
                   <div style={{ display: 'flex' }}>
                     <Title
                       color={color}
-                      type="text"
-                      name="title"
+                      type='text'
+                      name='title'
                       defaultValue={title}
                       onChange={(e) => {
 
-                        title = e.target.value
+                        title = e.target.value;
 
                         axios.put(apiUrl + id, {
                           id,
                           title,
                           field: 'title'
-                        })
+                        });
 
                       }}
                     />
@@ -86,13 +79,13 @@ const App = () => {
                             key={id + index}
                             onClick={() => {
 
-                              color = clickedColor
+                              color = clickedColor;
 
                               axios.put(apiUrl + id, {
                                 id,
                                 color,
                                 field: 'color'
-                              })
+                              });
 
                             }}
                           />
@@ -104,20 +97,20 @@ const App = () => {
                 </div>
                 <Content
                   color={color}
-                  name="content"
+                  name='content'
                   cols={30}
                   rows={14}
                   maxLength={400}
                   defaultValue={content}
                   onChange={(e) => {
 
-                    content = e.target.value
+                    content = e.target.value;
 
                     axios.put(apiUrl + id, {
                       id,
                       content,
                       field: 'content'
-                    })
+                    });
 
                   }}></Content>
               </Todo>
@@ -128,14 +121,14 @@ const App = () => {
         <DefaultTodo onClick={newTodo}> + </DefaultTodo>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const Delete = styled.button`
 
   transition: background-color 0.3s;
 
-  &:hover { background-color: #b4b4b437 }
+  &:hover { background-color: #b4b4b437 };
 
   cursor: pointer;
   border: none;
@@ -145,14 +138,14 @@ const Delete = styled.button`
   border-radius: 100%;
   width: 15px;
   height: 15px;
-`
+`;
 
 const Title = styled.input`
   margin-bottom: 5px;
   background-color: transparent;
   outline: none; 
   border: none;
-`
+`;
 
 const ColorButton = styled.div`
   background-color: ${props => props.color};
@@ -160,14 +153,14 @@ const ColorButton = styled.div`
   width: 15px;
   height: 15px;
   border: 1px solid gray;
-`
+`;
 
 const Content = styled.textarea`
   background-color: transparent;
   border: none;
   resize: none;
   outline: none;
-`
+`;
 
 const Todo = styled.div`
   padding-top: 12px;
@@ -178,7 +171,7 @@ const Todo = styled.div`
   transform: perspective(15rem);
   background: ${props => `linear-gradient(-50deg, ${props.color + 'ac'}, ${props.color} 100%) `};
   box-shadow: 10px 12px 10px -10px black;
-`
+`;
 
 const DefaultTodo = styled.div`
   margin-left: 5px;
@@ -188,6 +181,6 @@ const DefaultTodo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
-export default App
+export default App;
