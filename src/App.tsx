@@ -16,12 +16,14 @@ const App = () => {
   const [todos, setTodos] = useState<ITodos[]>([{ id: 1, title: '', content: '', date: '', color: '#f8f845' }])
   const [errorMessage, setErrorMessage] = useState<string>()
 
-  const apiUrl = 'http://localhost:3000/api/notes/'
+  const apiUrl: string = 'http://localhost:3000/api/notes/'
 
-  const getTodos = async () => {
+  const getTodos = async (): Promise<void> => {
+
     await axios.get(apiUrl)
       .then(({ data }) => setTodos(data))
       .catch(err => setErrorMessage(err))
+
   }
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const App = () => {
 
   })
 
-  const newTodo = async () => {
+  const newTodo = async (): Promise<void> => {
 
     const defaultTodo = {
       title: 'Title',
@@ -44,9 +46,11 @@ const App = () => {
 
   }
 
-  const deleteTodo = async (id: number) => await axios.delete(apiUrl + id)
+  const deleteTodo = async (id: number): Promise<void> => {
+    await axios.delete(apiUrl + id)
+  }
 
-  const colors = ['#f8f556', '#f87845', '#45c5f8', '#9cf845']
+  const colors: string[] = ['#f8f556', '#f87845', '#45c5f8', '#9cf845']
 
   return (
     <div className="App">
