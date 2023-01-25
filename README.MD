@@ -3,6 +3,8 @@
 An note/todo application using: 
 
 - Node
+- Express
+- Cors
 - React
 - Typeorm 
 - Docker 
@@ -17,6 +19,7 @@ go to<br>
 ``http://localhost:5173/`` (default vite port)
 
 ### To start db:
+(do this once (docker desktop needs to be open))
 `` npm run db ``<br>
 
 ### To start Back-End:
