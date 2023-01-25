@@ -16,8 +16,8 @@ An note/todo application using:
 go to<br>
 ``http://localhost:5173/`` (default vite port)
 
-### To start db:<br>
+### To start db:
 `` npm run db ``<br>
 
-### To start Back-End: <br>
+### To start Back-End:
 `` npm run serve`` <br>
